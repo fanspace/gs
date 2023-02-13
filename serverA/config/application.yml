@@ -1,7 +1,7 @@
 cfg:
-  appName: "UserServer"
+  appName: "ArticleServer"
   releaseMode: false
-  port: "12100"
+  port: "12200"
 dbs:
   - name: wr-db
     url: root:123456@tcp(192.168.0.95:3306)/oecp?charset=utf8mb4&parseTime=True&loc=Local
