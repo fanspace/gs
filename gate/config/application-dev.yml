@@ -1,0 +1,11 @@
+cfg:
+  appName: "GatePro"
+  releaseMode: false
+  port: "12100"
+corsSettings:
+  AllowOrigins:
+    - "*"
+  AllowMethods:
+    - "OPTIONS"
+    - "POST"
+    - "GET"

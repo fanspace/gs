@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+// 定义go文件生成路径
+//option go_package = "pb";
+
+// 定义生成service的包名
+package myserver;
+
+service MyServer {
+  // 定义rpc端点
+  rpc QueryUsers (UserReq) returns(UserListRes) {}
+  rpc GetUser (UserReq) returns (UserRes) {}
+}
+
+message UserReq {
+  int64  Id  = 1;
+  int64  Limit = 2;
+}
+
+message User {
+  int64   Id  = 1;
+  string   Account  = 2;
+  string   Showname = 3;
+  string  Email  =4;
+}
+
+message UserRes {
+  bool Success = 1;
+  string Msg = 2;
+  User  User = 3;
+}
+
+message UserListRes {
+  bool Success = 1;
+  string Msg = 2;
+  repeated  User  Users = 3;
+}
