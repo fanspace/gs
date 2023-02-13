@@ -1,4 +1,4 @@
-module starter-xorm
+module github.com/fanspace/gs/starter/starter-xorm
 
 go 1.18
 
