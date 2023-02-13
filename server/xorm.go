@@ -1,4 +1,4 @@
-package database
+package main
 
 import (
 	"github.com/go-spring/spring-core/gs"
@@ -12,6 +12,7 @@ import (
 
 func init() {
 	// 创建一个配置监听器, 当配置加载后将执行该方法
+
 	gs.OnProperty("dbs", func(config []model.DBConfig) {
 		// 遍历配置项
 		for _, dbConfig := range config {
@@ -23,6 +24,7 @@ func init() {
 			gs.Object(db).Destroy(CloseDB).Name(dbConfig.Name)
 		}
 	})
+
 }
 
 func CreateDB(dbconfig model.DBConfig) (*xorm.Engine, error) {

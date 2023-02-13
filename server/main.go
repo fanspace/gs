@@ -23,6 +23,7 @@ func init() {
 		})
 	})
 }
+
 func main() {
 	gs.Property("spring.application.name", "${cfg.appName}")
 	gs.Property("grpc.server.port", "${cfg.port}")
