@@ -40,13 +40,11 @@ func (c *Controller) QueryUsers(ctx web.Context) {
 func (c *Controller) GetUser(ctx web.Context) {
 	req := new(pb.UserReq)
 	req.Id, _ = strconv.ParseInt(ctx.PathParam("id"), 10, 64)
-	fmt.Println(req)
 	res, err := c.gp.GetUser(req)
 	if err != nil {
 		ctx.String(err.Error())
 		return
 	}
-	fmt.Println(res)
 	if res.Success {
 		ctx.String(fmt.Sprintf("succeed in get User : %s \n", res.User.Showname))
 		return

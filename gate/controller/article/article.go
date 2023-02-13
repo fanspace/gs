@@ -44,10 +44,10 @@ func (c *Controller) GetArticle(ctx web.Context) {
 	fmt.Println(req)
 	res, err := c.gp.GetArticle(req)
 	if err != nil {
+		log.Error(err.Error())
 		ctx.String(err.Error())
 		return
 	}
-	fmt.Println(res)
 	if res.Success {
 		ctx.String(fmt.Sprintf("succeed in get article : %s \n", res.Article.Title))
 		return

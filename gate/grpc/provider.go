@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"context"
+	"fmt"
 	pb "gate/pb"
 	"github.com/labstack/gommon/log"
 )
@@ -39,6 +40,8 @@ func (gp *GrpcProvider) QueryArticles(req *pb.ArticleReq) (*pb.ArticleListRes, e
 
 func (gp *GrpcProvider) GetArticle(req *pb.ArticleReq) (*pb.ArticleRes, error) {
 	//req.Id = 4411
+	fmt.Println("...............")
+	fmt.Println(gp)
 	res, err := gp.ArticleServerClient.GetArticle(context.TODO(), req)
 	if err != nil {
 		log.Error(err.Error())

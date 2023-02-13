@@ -1,7 +1,7 @@
 cfg:
   appName: "GatePro"
   releaseMode: false
-  port: "12000"
+  port: ":12000"
 corsSettings:
   AllowOrigins:
     - "*"
@@ -9,3 +9,6 @@ corsSettings:
     - "OPTIONS"
     - "POST"
     - "GET"
+grpcSettings:
+  userServer: "127.0.0.1:12100"
+  articleServer: "127.0.0.1:12200"

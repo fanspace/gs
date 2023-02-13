@@ -8,6 +8,7 @@ import (
 )
 
 func init() {
+
 	gs.Object(new(pub.Controller)).Init(func(c *pub.Controller) {
 		// 注册路由
 		gs.GetMapping("/", c.Home)
@@ -25,3 +26,16 @@ func init() {
 	})
 
 }
+
+type Controller struct {
+	ArticleCtrl article.Controller
+	UserCtrl    user.Controller
+	PubCtrl     pub.Controller
+}
+
+/*
+func init() {
+	fmt.Println("22222222222222222222222222222222222222")
+	//gs.Object(new(Controller)).Name("controllers")
+}
+*/
