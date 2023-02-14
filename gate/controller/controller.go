@@ -32,10 +32,3 @@ type Controller struct {
 	UserCtrl    user.Controller
 	PubCtrl     pub.Controller
 }
-
-/*
-func init() {
-	fmt.Println("22222222222222222222222222222222222222")
-	//gs.Object(new(Controller)).Name("controllers")
-}
-*/

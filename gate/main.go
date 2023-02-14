@@ -1,7 +1,6 @@
 package main
 
 import (
-	_ "gate/controller"
 	gp "gate/grpc"
 	pb "gate/pb"
 	"github.com/go-spring/spring-core/gs"

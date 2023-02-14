@@ -6,7 +6,6 @@ import (
 )
 
 func init() {
-	//gs.Object(new(UserService)).On(cond.OnBean((*xorm.Engine)(nil))).Name("userService")
 	gs.Object(new(UserService)).
 		Export((*UserProvider)(nil)).Name("userProvider")
 }
