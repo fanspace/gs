@@ -1,15 +1,18 @@
 package service
 
 import (
+	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/labstack/gommon/log"
+	"serverA/grpc"
 	"serverA/model"
 	pb "serverA/pb"
 	"xorm.io/xorm"
 )
 
 type ArticleService struct {
-	db *xorm.Engine `autowire:"wr-db"`
+	db *xorm.Engine       `autowire:"wr-db"`
+	gp *grpc.GrpcProvider `autowire:"gp"`
 }
 
 func (s *ArticleService) GetArticle(req *pb.ArticleReq) (*pb.ArticleRes, error) {
@@ -22,6 +25,13 @@ func (s *ArticleService) GetArticle(req *pb.ArticleReq) (*pb.ArticleRes, error) 
 	}
 	res.Article = new(pb.Article)
 	copier.Copy(res.Article, Article)
+	userreq := &pb.UserReq{Id: 1, Limit: 0}
+	user, err := s.gp.GetUser(userreq)
+	if err != nil {
+		log.Error(err.Error())
+		return res, err
+	}
+	fmt.Println(user.User.Showname)
 	return res, nil
 }
 

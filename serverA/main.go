@@ -5,7 +5,9 @@ import (
 	"github.com/go-spring/spring-core/grpc"
 	"github.com/go-spring/spring-core/gs"
 	"github.com/go-spring/spring-core/gs/cond"
+	_ "github.com/go-spring/starter-grpc/client"
 	_ "github.com/go-spring/starter-grpc/server"
+	gp "serverA/grpc"
 	pb "serverA/pb"
 )
 
@@ -22,10 +24,14 @@ func init() {
 			Service: srv,
 		})
 	})
+
+	gs.GrpcClient(pb.NewUserServerClient, "userserver")
+	gs.Object(&gp.GrpcProvider{}).Name("gp")
 }
 
 func main() {
 	gs.Property("spring.application.name", "${cfg.appName}")
 	gs.Property("grpc.server.port", "${cfg.port}")
+	gs.Property("grpc.endpoint.userserver.address", "${grpcSettings.userServer}")
 	fmt.Println("application exit: ", gs.Web(false).Run())
 }
