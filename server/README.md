@@ -1,4 +1,5 @@
 测试用grpc-server, 使用xorm
+<pre><code>
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
@@ -8,3 +9,4 @@ CREATE TABLE `user` (
 PRIMARY KEY (`id`) USING BTREE,
 UNIQUE KEY `id_UNIQUE` (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=65737 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+</pre></code>
