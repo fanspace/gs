@@ -26,11 +26,8 @@ func GetArticle(c *gin.Context) {
 		return
 	}
 	if value != nil {
-		res := value.(*pb.ArticleRes)
-		if res != nil {
-			c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": res})
-			return
-		}
+		GrpcRessolvegr(c, value)
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4007}})
 	return
@@ -49,11 +46,8 @@ func QueryArticles(c *gin.Context) {
 		return
 	}
 	if value != nil {
-		res := value.(*pb.ArticleListRes)
-		if res != nil {
-			c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": res})
-			return
-		}
+		GrpcRessolvegr(c, value)
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4007}})
 	return

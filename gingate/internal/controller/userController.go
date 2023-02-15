@@ -25,11 +25,8 @@ func GetUser(c *gin.Context) {
 		return
 	}
 	if value != nil {
-		res := value.(*pb.UserRes)
-		if res != nil {
-			c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": res})
-			return
-		}
+		GrpcRessolvegr(c, value)
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4007}})
 	return
@@ -48,11 +45,8 @@ func QueryUsers(c *gin.Context) {
 		return
 	}
 	if value != nil {
-		res := value.(*pb.UserListRes)
-		if res != nil {
-			c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": res})
-			return
-		}
+		GrpcRessolvegr(c, value)
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4007}})
 	return

@@ -21,10 +21,14 @@ func DealGrpcCall[T any](req T, methodName string, grpcName string) (any, error)
 		log.Error(err.Error())
 		return nil, err
 	}
+	defer pool.Close()
 	if pool == nil {
 		log.Error(fmt.Sprintf("connect to %s failed", grpcName))
 		return nil, errors.New(commons.CUS_ERR_4007)
 	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*core.Cfg.GrpcSettings.TimeOut)
+	defer cancel()
+	ctx = metadata.AppendToOutgoingContext(ctx, "dapr-app-id", fmt.Sprintf("grpc-%s", grpcName))
 	var c any
 	switch grpcName {
 	case "userserver":
@@ -34,10 +38,6 @@ func DealGrpcCall[T any](req T, methodName string, grpcName string) (any, error)
 	default:
 		return nil, errors.New(commons.CUS_ERR_4002)
 	}
-	defer pool.Close()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*core.Cfg.GrpcSettings.TimeOut)
-	defer cancel()
-	ctx = metadata.AppendToOutgoingContext(ctx, "dapr-app-id", fmt.Sprintf("grpc-%s", grpcName))
 	value := reflect.ValueOf(c)
 	f := value.MethodByName(methodName)
 	var parms []reflect.Value
@@ -48,6 +48,7 @@ func DealGrpcCall[T any](req T, methodName string, grpcName string) (any, error)
 	}
 	if res[1].Interface() != nil {
 		err = res[1].Interface().(error)
+		return nil, err
 	}
 	if res[0].Interface() != nil {
 		return res[0].Interface(), nil
