@@ -1,0 +1,1 @@
+不使用go-spring的apigate, 使用grpc连接其他服务,可配置gin
