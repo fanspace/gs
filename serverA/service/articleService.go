@@ -25,6 +25,7 @@ func (s *ArticleService) GetArticle(req *pb.ArticleReq) (*pb.ArticleRes, error) 
 	}
 	res.Article = new(pb.Article)
 	copier.Copy(res.Article, Article)
+	// 测试做为grpc-client 调用其他 grpc server
 	userreq := &pb.UserReq{Id: 1, Limit: 0}
 	user, err := s.gp.GetUser(userreq)
 	if err != nil {
