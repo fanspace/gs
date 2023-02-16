@@ -186,6 +186,7 @@ func stdLogInterpretZapEntry(entry zapcore.Entry) zapcore.Entry {
 		entry.Level = zapcore.InfoLevel
 		entry.Message = message[6:]
 	}
+
 	return entry
 }
 

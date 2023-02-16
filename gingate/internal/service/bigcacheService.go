@@ -32,11 +32,7 @@ func ReleaseIpCache(ip string) error {
 	return nil
 }
 func IsIpBand(ip string) bool {
-	entry, _ := core.BCache.Get(fmt.Sprintf("%s_%s", core.PREFIX_BCACHE_BAN, ip))
-	if string(entry) != "" {
-		return true
-	}
-	return false
+	return core.IsIpBand(ip)
 }
 
 func SetBigCache(key string, val string) error {

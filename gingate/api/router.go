@@ -11,7 +11,7 @@ import (
 )
 
 func InitRouter() *gin.Engine {
-	router := gin.Default()
+	router := gin.New()
 	const (
 		prefix = core.APISITE_PREFIX
 	)
@@ -22,7 +22,7 @@ func InitRouter() *gin.Engine {
 	config.AllowOrigins = core.Cfg.CorsSettings.AllowOrigins
 	config.AllowMethods = core.Cfg.CorsSettings.AllowMethods
 	//config.AddAllowHeaders("Authorization", "Logintype")
-	router.Use(cors.New(config))
+	router.Use(cors.New(config), gin.Recovery(), middleware.FilterBan())
 	if !core.Cfg.ReleaseMode {
 		router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}

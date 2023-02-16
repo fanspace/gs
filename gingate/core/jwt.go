@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"strings"
 )
@@ -41,8 +40,7 @@ func ParseJwt(tokenstr string) (bool, *MyClaim) {
 		mc.Username = claims.Username
 		mc.UserType = claims.UserType
 		return true, mc
-	} else {
-		Info(fmt.Sprintf("%v %v", claims.Usid, claims.StandardClaims.ExpiresAt))
-		return false, nil
 	}
+	//Info(fmt.Sprintf("%v %v", claims.Usid, claims.StandardClaims.ExpiresAt))
+	return false, nil
 }

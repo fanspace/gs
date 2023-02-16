@@ -97,6 +97,14 @@ func BanUserCache(username string) error {
 	return nil
 }
 
+func IsIpBand(ip string) bool {
+	entry, _ := BCache.Get(fmt.Sprintf("%s_%s", PREFIX_BCACHE_BAN, ip))
+	if string(entry) != "" {
+		return true
+	}
+	return false
+}
+
 func IsUserBaned(username string) bool {
 	entry, _ := BCache.Get(fmt.Sprintf("%s_%s", PREFIX_BCACHE_BAN, username))
 	if string(entry) != "" {
