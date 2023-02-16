@@ -4,6 +4,7 @@ import (
 	"gingate/commons"
 	"gingate/core"
 	. "gingate/internal/controller"
+	"gingate/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -29,7 +30,7 @@ func InitRouter() *gin.Engine {
 		userGroup.POST("/list", QueryUsers)
 	}
 	articleGroup := router.Group(prefix + "/article")
-	articleGroup.Use()
+	articleGroup.Use(middleware.MustLogin())
 	{
 		articleGroup.GET("/:id", GetArticle)
 		articleGroup.POST("/list", QueryArticles)
