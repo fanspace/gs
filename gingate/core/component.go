@@ -3,6 +3,7 @@ package core
 import (
 	"fmt"
 	"github.com/allegro/bigcache/v3"
+	"github.com/casbin/casbin/v2"
 	"github.com/gomodule/redigo/redis"
 	"xorm.io/xorm"
 )
@@ -10,6 +11,7 @@ import (
 var Orm *xorm.Engine
 var Rpool *redis.Pool
 var BCache *bigcache.BigCache
+var Casbin *casbin.Enforcer
 var err error
 
 func InitComponent() {
@@ -48,6 +50,14 @@ func InitComponent() {
 		} else {
 			Info("BlackList added ... ")
 		}
+	}
+
+	// 开启 casbin
+	Casbin, err = initCasbin()
+	if err != nil {
+		Error(err.Error())
+	} else {
+		Info("BigCache init ... ")
 	}
 }
 

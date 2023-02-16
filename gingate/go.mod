@@ -3,12 +3,16 @@ module gingate
 go 1.18
 
 require (
+	github.com/allegro/bigcache/v3 v3.1.0
+	github.com/casbin/casbin/v2 v2.28.3
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-gonic/gin v1.8.2
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/golang/protobuf v1.5.2
 	github.com/gomodule/redigo v1.8.9
+	github.com/google/uuid v1.3.0
 	github.com/spf13/viper v1.15.0
 	go.uber.org/zap v1.24.0
 	google.golang.org/grpc v1.53.0
@@ -18,7 +22,10 @@ require (
 )
 
 require (
-	github.com/allegro/bigcache/v3 v3.1.0 // indirect
+	github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible // indirect
+	github.com/casbin/xorm-adapter/v2 v2.5.1 // indirect
+	github.com/cespare/xxhash/v2 v2.2.0 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
@@ -29,6 +36,7 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
+	github.com/lib/pq v1.10.2 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-isatty v0.0.16 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
