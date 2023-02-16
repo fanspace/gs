@@ -18,7 +18,7 @@ func dialgrpc(address string) (*grpc.ClientConn, error) {
 
 var GrpcPools map[string]*grpc.ClientConn
 
-func InitGrpcs() {
+func initGrpcs() {
 	if Cfg.GrpcSettings != nil && len(Cfg.GrpcSettings.EndPoint) > 0 {
 		GrpcPools = make(map[string]*grpc.ClientConn)
 		for grpcname, gprcaddr := range Cfg.GrpcSettings.EndPoint {

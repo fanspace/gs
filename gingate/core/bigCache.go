@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func InitLocalCache() (*bigcache.BigCache, error) {
+func initLocalCache() (*bigcache.BigCache, error) {
 	config := bigcache.Config{
 		// number of shards (must be a power of 2)
 		Shards: 32,

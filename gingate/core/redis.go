@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func InitRedis() (*redis.Pool, error) {
+func initRedis() (*redis.Pool, error) {
 	pool := &redis.Pool{
 		MaxIdle:     Cfg.Database.RedisSettings.MaxIdle,
 		MaxActive:   Cfg.Database.RedisSettings.MaxActive,

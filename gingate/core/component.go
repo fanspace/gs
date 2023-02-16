@@ -14,7 +14,7 @@ var err error
 
 func InitComponent() {
 	if Cfg.Database.MysqlSettings != nil {
-		Orm, err = InitXorm()
+		Orm, err = initXorm()
 		if err != nil {
 			Error(err.Error())
 		} else {
@@ -23,7 +23,7 @@ func InitComponent() {
 	}
 
 	if Cfg.Database.RedisSettings != nil {
-		Rpool, err = InitRedis()
+		Rpool, err = initRedis()
 		if err != nil {
 			Error(err.Error())
 		} else {
@@ -32,10 +32,10 @@ func InitComponent() {
 	}
 
 	if Cfg.GrpcSettings != nil {
-		InitGrpcs()
+		initGrpcs()
 	}
 	// 开启bigcache
-	BCache, err = InitLocalCache()
+	BCache, err = initLocalCache()
 	if err != nil {
 		Error(err.Error())
 	} else {
@@ -51,47 +51,6 @@ func InitComponent() {
 	}
 }
 
-func loadFromRedis() error {
-	total, blacks, err := getAllBanUsers()
-	if err != nil {
-		Error(err.Error())
-		return err
-	} else {
-		if total > 0 {
-			for _, v := range blacks {
-				banUserCache(v)
-			}
-		}
-	}
-	return nil
-}
-
-func banUserCache(username string) error {
-	BCache.Set(fmt.Sprintf("ban_%s", username), []byte("ban"))
-	Info("username： " + username + "已被加入黑名单")
-	return nil
-}
-
-func getAllBanUsers() (int64, []string, error) {
-	myredis := Rpool.Get()
-	defer myredis.Close()
-	res := make([]string, 0)
-	keyname := "zj_banuser"
-	total, err := redis.Int64(myredis.Do("SCARD", keyname))
-	if err != nil {
-		Error(err.Error())
-		return 0, res, err
-	}
-	if total > 0 {
-		res, err = redis.Strings(myredis.Do("SMEMBERS", keyname))
-		if err != nil {
-			Error(err.Error())
-			return 0, res, err
-		}
-	}
-	return total, res, nil
-}
-
 func CloseComponent() {
 	Info("shutting down xrom ...")
 	if Orm != nil {
@@ -105,4 +64,45 @@ func CloseComponent() {
 	if BCache != nil {
 		BCache.Close()
 	}
+}
+
+func loadFromRedis() error {
+	total, blacks, err := getAllBanUsers()
+	if err != nil {
+		Error(err.Error())
+		return err
+	} else {
+		if total > 0 {
+			for _, v := range blacks {
+				BanUserCache(v)
+			}
+		}
+	}
+	return nil
+}
+
+func BanUserCache(username string) error {
+	BCache.Set(fmt.Sprintf("%s_%s", PREFIX_BCACHE_BAN, username), []byte(PREFIX_BCACHE_BAN))
+	Info("username： " + username + "已被加入黑名单")
+	return nil
+}
+
+func getAllBanUsers() (int64, []string, error) {
+	myredis := Rpool.Get()
+	defer myredis.Close()
+	res := make([]string, 0)
+	keyname := PREFIX_REDIS_USER_BAN
+	total, err := redis.Int64(myredis.Do("SCARD", keyname))
+	if err != nil {
+		Error(err.Error())
+		return 0, res, err
+	}
+	if total > 0 {
+		res, err = redis.Strings(myredis.Do("SMEMBERS", keyname))
+		if err != nil {
+			Error(err.Error())
+			return 0, res, err
+		}
+	}
+	return total, res, nil
 }

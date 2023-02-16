@@ -6,7 +6,7 @@ import (
 	"xorm.io/xorm"
 )
 
-func InitXorm() (*xorm.Engine, error) {
+func initXorm() (*xorm.Engine, error) {
 
 	orm, err := xorm.NewEngine(Cfg.Database.MysqlSettings.DriverName, Cfg.Database.MysqlSettings.Url)
 	if err != nil {
