@@ -1,4 +1,4 @@
-package commons
+package core
 
 const (
 	APISITE_PREFIX         = ""

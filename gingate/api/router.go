@@ -1,7 +1,6 @@
 package api
 
 import (
-	"gingate/commons"
 	"gingate/core"
 	. "gingate/internal/controller"
 	"gingate/middleware"
@@ -12,7 +11,7 @@ import (
 func InitRouter() *gin.Engine {
 	router := gin.Default()
 	const (
-		prefix = commons.APISITE_PREFIX
+		prefix = core.APISITE_PREFIX
 	)
 	if core.Cfg.ReleaseMode {
 		gin.SetMode(gin.ReleaseMode)

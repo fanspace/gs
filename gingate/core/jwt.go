@@ -2,9 +2,7 @@ package core
 
 import (
 	"fmt"
-	"gingate/commons"
 	"github.com/dgrijalva/jwt-go"
-	"log"
 	"strings"
 )
 
@@ -26,14 +24,14 @@ type MyClaim struct {
 func ParseJwt(tokenstr string) (bool, *MyClaim) {
 	token, err := jwt.ParseWithClaims(strings.TrimSpace(tokenstr), &MyCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if Cfg.ReleaseMode {
-			return []byte(commons.JWT_SECRET_STRING_PROD), nil
+			return []byte(JWT_SECRET_STRING_PROD), nil
 		} else {
-			return []byte(commons.JWT_SECRET_STRING_DEV), nil
+			return []byte(JWT_SECRET_STRING_DEV), nil
 		}
 
 	})
 	if err != nil {
-		log.Println(err.Error())
+		Error(err.Error())
 		return false, nil
 	}
 	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
@@ -44,7 +42,7 @@ func ParseJwt(tokenstr string) (bool, *MyClaim) {
 		mc.UserType = claims.UserType
 		return true, mc
 	} else {
-		log.Println(fmt.Sprintf("%v %v", claims.Usid, claims.StandardClaims.ExpiresAt))
+		Info(fmt.Sprintf("%v %v", claims.Usid, claims.StandardClaims.ExpiresAt))
 		return false, nil
 	}
 }

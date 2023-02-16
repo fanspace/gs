@@ -42,7 +42,7 @@ LogSettings:
 Database:
   MysqlSettings:
     DriverName: "mysql"
-    Url: "root:123456@tcp(192.168.0.95:3336)/oecp?charset=utf8mb4"
+    Url: "root:123456@tcp(192.168.0.95:3306)/oecp?charset=utf8mb4"
     MaxIdleConns: 100
     MaxOpenConns: 1500
     QueryTimeout: 30

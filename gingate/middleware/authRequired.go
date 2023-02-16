@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"gingate/core"
+	"gingate/internal/model"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
@@ -15,7 +16,7 @@ func MustLogin() gin.HandlerFunc {
 			isauth, mc := core.ParseJwt(jwttokens)
 			if mc == nil || !isauth {
 				c.Set("mc", new(core.MyClaim))
-				c.JSON(http.StatusUnauthorized, gin.H{"code": 401, "msg": "未登录或登录已过期!"})
+				c.JSON(http.StatusUnauthorized, gin.H{"code": 401, "result": model.SimpleResponse{Success: false, Msg: "未登录或登录已过期"}})
 				c.Abort()
 				return
 			} else {
@@ -23,7 +24,7 @@ func MustLogin() gin.HandlerFunc {
 					isbaned := service.IsUserBaned(mc.Username)
 					if isbaned {
 						c.Set("mc", new(core.MyClaim))
-						c.JSON(http.StatusUnauthorized, gin.H{"code": 403, "msg": "账号已被锁定!"})
+						c.JSON(http.StatusUnauthorized, gin.H{"code": 403, "result": model.SimpleResponse{Success: false, Msg: "账号已被锁定"}})
 						c.Abort()
 						return
 					} else {
@@ -34,7 +35,7 @@ func MustLogin() gin.HandlerFunc {
 			}
 		} else {
 			c.Set("mc", new(core.MyClaim))
-			c.JSON(http.StatusUnauthorized, gin.H{"code": 401, "msg": "未登录或登录已过期!!!"})
+			c.JSON(http.StatusUnauthorized, gin.H{"code": 401, "result": model.SimpleResponse{Success: false, Msg: "未登录或登录已过期"}})
 			c.Abort()
 			return
 		}

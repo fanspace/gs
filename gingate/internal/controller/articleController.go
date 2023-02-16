@@ -14,7 +14,7 @@ import (
 func GetArticle(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4002}})
+		c.JSON(http.StatusOK, gin.H{"code": log.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4002}})
 		return
 	}
 	req := new(pb.ArticleReq)
@@ -29,7 +29,7 @@ func GetArticle(c *gin.Context) {
 		GrpcRessolvegr(c, value)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4007}})
+	c.JSON(http.StatusOK, gin.H{"code": log.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4007}})
 	return
 }
 
@@ -37,7 +37,7 @@ func QueryArticles(c *gin.Context) {
 	req := new(pb.ArticleReq)
 	if err := c.ShouldBindJSON(req); err != nil {
 		log.Error(err.Error())
-		c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4002}})
+		c.JSON(http.StatusOK, gin.H{"code": log.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4002}})
 		return
 	}
 	value, err := service.DealGrpcCall(req, "QueryArticles", "articleserver")
@@ -49,6 +49,6 @@ func QueryArticles(c *gin.Context) {
 		GrpcRessolvegr(c, value)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"code": commons.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4007}})
+	c.JSON(http.StatusOK, gin.H{"code": log.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4007}})
 	return
 }

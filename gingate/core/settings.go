@@ -94,17 +94,17 @@ var Cfg *Config = &Config{}
 var VOptions *viper.Viper
 
 func init() {
-	log.Println("loading system configure......")
+	Info("loading system configure......")
 	vs := viper.New()
 	vs.SetConfigName("config.yaml")
 	vs.AddConfigPath("./config")
 	vs.SetConfigType("yaml")
 	if err := vs.ReadInConfig(); err != nil {
-		log.Println(err.Error())
+		Error(err.Error())
 		os.Exit(1)
 	}
 	if err := vs.Unmarshal(Cfg); err != nil {
-		log.Println(err.Error())
+		Error(err.Error())
 		os.Exit(1)
 	}
 	// 以下为判断
@@ -116,13 +116,13 @@ func init() {
 }
 
 func initOptions() {
-	log.Println("加载自定义配置文件......")
+	Info("加载自定义配置文件......")
 	VOptions = viper.New()
 	VOptions.SetConfigName("options.yaml")
 	VOptions.AddConfigPath("./conf")
 	VOptions.SetConfigType("yaml")
 	if err := VOptions.ReadInConfig(); err != nil {
-		log.Println(err.Error())
+		Error(err.Error())
 		//os.Exit(1)
 	}
 
@@ -140,5 +140,5 @@ func (s *LogSettings) PrintLogConfig() {
 
 func (o *Config) PrintConfig() {
 	o.LogSettings.PrintLogConfig()
-	log.Println(fmt.Sprintf("ReleaseMode:%v", o.ReleaseMode))
+	Info(fmt.Sprintf("ReleaseMode:%v", o.ReleaseMode))
 }

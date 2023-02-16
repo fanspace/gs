@@ -2,6 +2,7 @@ package core
 
 import (
 	"context"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -37,12 +38,8 @@ func NewServer() *GracefulServer {
 	Srv = &GracefulServer{}
 	Srv.Log = NewLogger(LoggerConfigFromLoggerConfig())
 	RedirectStdLog(Srv.Log)
-
 	// 使用server logger 作为全局的logger
 	InitGlobalLogger(Srv.Log)
-	// 开启bigcache
-	//service.InitCache()
-	//service.InitGrpcs()
 	return Srv
 }
 
@@ -73,14 +70,13 @@ func (gracefulServer *GracefulServer) ShutDown() {
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
-	log.Println("Shutdown Server ...")
-	//service.CloseCache()
-	log.Println("Destroy BigCache ...")
+	fmt.Println("********************************************    Shutdown Server    ********************************************")
+	defer CloseComponent()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := Srv.Server.Shutdown(ctx); err != nil {
 		log.Println("Server Shutdown err:" + err.Error())
 	}
-	log.Println("Server exiting")
+	Info("Server exiting")
 }

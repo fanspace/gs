@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"gingate/commons"
-	"gingate/component/grpc"
 	"gingate/core"
 	log "gingate/core"
 	pb "gingate/pb"
@@ -16,7 +15,7 @@ import (
 
 func DealGrpcCall[T any](req T, methodName string, grpcName string) (any, error) {
 	var res []reflect.Value
-	pool, err := grpc.GetGrpcPool(grpcName)
+	pool, err := log.GetGrpcPool(grpcName)
 	if err != nil {
 		log.Error(err.Error())
 		return nil, err
