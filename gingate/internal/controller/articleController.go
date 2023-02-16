@@ -11,6 +11,15 @@ import (
 	"strconv"
 )
 
+// @Summary 文章详情
+// @Description 文章详情
+// @Tags Article
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param id path int true " "
+// @Success 200 {object} map[string]any
+// @Router /article/{id} [get]
 func GetArticle(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
@@ -33,6 +42,15 @@ func GetArticle(c *gin.Context) {
 	return
 }
 
+// @Summary 文章列表
+// @Description 文章列表
+// @Tags Article
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param req body pb.ArticleReq true "article list"
+// @Success 200 {object} map[string]any
+// @Router /article/list [post]
 func QueryArticles(c *gin.Context) {
 	req := new(pb.ArticleReq)
 	if err := c.ShouldBindJSON(req); err != nil {

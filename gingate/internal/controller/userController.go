@@ -11,6 +11,14 @@ import (
 	"strconv"
 )
 
+// @Summary 用户详情
+// @Description 用户详情
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param id path int true " "
+// @Success 200 {object} map[string]any
+// @Router /user/{id} [get]
 func GetUser(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
@@ -32,6 +40,14 @@ func GetUser(c *gin.Context) {
 	return
 }
 
+// @Summary 用户列表
+// @Description 用户列表
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param req body pb.UserReq true "User list"
+// @Success 200 {object} map[string]any
+// @Router /user/list [post]
 func QueryUsers(c *gin.Context) {
 	req := new(pb.UserReq)
 	if err := c.ShouldBindJSON(req); err != nil {

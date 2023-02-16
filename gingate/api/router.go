@@ -6,6 +6,8 @@ import (
 	"gingate/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func InitRouter() *gin.Engine {
@@ -21,6 +23,9 @@ func InitRouter() *gin.Engine {
 	config.AllowMethods = core.Cfg.CorsSettings.AllowMethods
 	//config.AddAllowHeaders("Authorization", "Logintype")
 	router.Use(cors.New(config))
+	if !core.Cfg.ReleaseMode {
+		router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	}
 	router.GET(prefix+"/ping", Ping)
 	userGroup := router.Group(prefix + "/user")
 	userGroup.Use()
