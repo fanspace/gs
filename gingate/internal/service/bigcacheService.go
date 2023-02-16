@@ -17,11 +17,7 @@ func ReleaseUserCache(username string) error {
 }
 
 func IsUserBaned(username string) bool {
-	entry, _ := core.BCache.Get(fmt.Sprintf("%s_%s", core.PREFIX_BCACHE_BAN, username))
-	if string(entry) != "" {
-		return true
-	}
-	return false
+	return core.IsUserBaned(username)
 }
 
 func BanIpCache(ip string) error {

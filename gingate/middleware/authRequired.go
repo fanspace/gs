@@ -20,18 +20,18 @@ func MustLogin() gin.HandlerFunc {
 				c.Abort()
 				return
 			} else {
-				/*
-					isbaned := service.IsUserBaned(mc.Username)
-					if isbaned {
-						c.Set("mc", new(core.MyClaim))
-						c.JSON(http.StatusUnauthorized, gin.H{"code": 403, "result": model.SimpleResponse{Success: false, Msg: "账号已被锁定"}})
-						c.Abort()
-						return
-					} else {
-						c.Set("mc", mc)
-						c.Next()
-					}
-				*/
+
+				isbaned := core.IsUserBaned(mc.Username)
+				if isbaned {
+					c.Set("mc", new(core.MyClaim))
+					c.JSON(http.StatusUnauthorized, gin.H{"code": 403, "result": model.SimpleResponse{Success: false, Msg: "账号已被锁定"}})
+					c.Abort()
+					return
+				} else {
+					c.Set("mc", mc)
+					c.Next()
+				}
+
 			}
 		} else {
 			c.Set("mc", new(core.MyClaim))

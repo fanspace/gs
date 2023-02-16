@@ -87,6 +87,14 @@ func BanUserCache(username string) error {
 	return nil
 }
 
+func IsUserBaned(username string) bool {
+	entry, _ := BCache.Get(fmt.Sprintf("%s_%s", PREFIX_BCACHE_BAN, username))
+	if string(entry) != "" {
+		return true
+	}
+	return false
+}
+
 func getAllBanUsers() (int64, []string, error) {
 	myredis := Rpool.Get()
 	defer myredis.Close()
