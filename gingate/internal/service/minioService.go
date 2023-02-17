@@ -41,6 +41,10 @@ func Upload2Minio(file *multipart.FileHeader, resname, ext, bucketname, objtype 
 func checkFileSize(file *multipart.FileHeader) error {
 	var limitedSize int = 1024 * 1024
 	fileLimit := core.VOptions.GetInt("UploadProps.MAX_UPLOAD_FILE_SIZE") * limitedSize
+	// not allow unlimited
+	if fileLimit == 0 {
+		fileLimit = core.DEFAULT_FILE_SIZE_LIMIT
+	}
 	if file.Size > int64(fileLimit) {
 		return errors.New(fmt.Sprintf("%s:%dM", commons.CUS_ERR_4022, core.VOptions.GetInt("UploadProps.MAX_UPLOAD_FILE_SIZE")))
 	}

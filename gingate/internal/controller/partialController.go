@@ -20,7 +20,7 @@ func ErrSolver(c *gin.Context, err error) {
 	return
 }
 
-func GrpcRessolvegr(c *gin.Context, value any) {
+func GrpcResSolver(c *gin.Context, value any) {
 	var res any
 	switch value.(type) {
 	case *pb.UserListRes:

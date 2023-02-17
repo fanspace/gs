@@ -94,7 +94,37 @@ var Cfg *Config = &Config{}
 var VOptions *viper.Viper
 
 func init() {
-	Info("loading system configure......")
+
+	nac, err := initNacos()
+	if err != nil {
+		Error(err.Error())
+	}
+	if nac != nil {
+		Cfg, err = nac.initNacosCfg()
+		if err != nil {
+			Error(err.Error())
+		}
+		if Cfg != nil && Cfg.AppName != "" {
+			err = nac.initNamingClient()
+			if err != nil {
+				Error(err.Error())
+			}
+		}
+	}
+	if Cfg == nil || Cfg.AppName == "" {
+		initLocalConfig()
+	}
+
+	// 以下为判断
+	if Cfg.Smark == "" {
+		Cfg.Smark = GetIpStr()
+	}
+	initOptions()
+	Cfg.PrintConfig()
+}
+
+func initLocalConfig() {
+	Info("loading local system configure......")
 	vs := viper.New()
 	vs.SetConfigName("config.yaml")
 	vs.AddConfigPath("./config")
@@ -107,12 +137,6 @@ func init() {
 		Error(err.Error())
 		os.Exit(1)
 	}
-	// 以下为判断
-	if Cfg.Smark == "" {
-		Cfg.Smark = GetIpStr()
-	}
-	initOptions()
-	Cfg.PrintConfig()
 }
 
 func initOptions() {

@@ -1,0 +1,10 @@
+ServerConfigs:
+  - IpAddr: 192.168.0.95
+    Port: 8848
+ClientConfig:
+  NamespaceId: "7bf7d05a-b1ad-4e1e-806a-9daff4b3e4c0"
+  TimeoutMs: 50000
+  NotLoadCacheAtStart: true
+  LogLevel: "debug"
+ConfigId: "gingate-config.yaml"
+Group: "dev"

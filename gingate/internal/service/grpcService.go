@@ -27,7 +27,9 @@ func DealGrpcCall[T any](req T, methodName string, grpcName string) (any, error)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*core.Cfg.GrpcSettings.TimeOut)
 	defer cancel()
-	ctx = metadata.AppendToOutgoingContext(ctx, "dapr-app-id", fmt.Sprintf("grpc-%s", grpcName))
+	if core.Cfg.DaprMode {
+		ctx = metadata.AppendToOutgoingContext(ctx, "dapr-app-id", fmt.Sprintf("grpc-%s", grpcName))
+	}
 	var c any
 	switch grpcName {
 	case "userserver":

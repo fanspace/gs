@@ -34,7 +34,7 @@ func GetUser(c *gin.Context) {
 		return
 	}
 	if value != nil {
-		GrpcRessolvegr(c, value)
+		GrpcResSolver(c, value)
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"code": log.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4007}})
@@ -62,7 +62,7 @@ func QueryUsers(c *gin.Context) {
 		return
 	}
 	if value != nil {
-		GrpcRessolvegr(c, value)
+		GrpcResSolver(c, value)
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"code": log.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4007}})
