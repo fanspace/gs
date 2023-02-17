@@ -1,0 +1,1 @@
+未使用go-spring的grpc server端与serverA功能一致，主要用于对比代码量
