@@ -119,7 +119,7 @@ func initOptions() {
 	Info("加载自定义配置文件......")
 	VOptions = viper.New()
 	VOptions.SetConfigName("options.yaml")
-	VOptions.AddConfigPath("./conf")
+	VOptions.AddConfigPath("./config")
 	VOptions.SetConfigType("yaml")
 	if err := VOptions.ReadInConfig(); err != nil {
 		Error(err.Error())

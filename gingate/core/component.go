@@ -91,6 +91,7 @@ func loadFromRedis() error {
 	return nil
 }
 
+//调用rabbit通知其他服务，不在此实现
 func BanUserCache(username string) error {
 	BCache.Set(fmt.Sprintf("%s_%s", PREFIX_BCACHE_BAN, username), []byte(PREFIX_BCACHE_BAN))
 	Info("username： " + username + "已被加入黑名单")

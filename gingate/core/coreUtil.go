@@ -2,7 +2,9 @@ package core
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
+	"gingate/commons"
 	"log"
 	"math/rand"
 	"net"
@@ -213,4 +215,44 @@ func RemoteIp(req *http.Request) string {
 		remoteAddr = "127.0.0.1"
 	}
 	return remoteAddr
+}
+
+func ConvertExt2ContentType(ext string) (string, error) {
+
+	upext := strings.ToUpper(ext)
+	switch upext {
+	case "JPG", "JPEG":
+		return "image/jpeg", nil
+	case "PNG", "GIF":
+		return fmt.Sprintf("image/%s", strings.ToLower(ext)), nil
+	// application
+	case "ZIP", "CVS", "PDF":
+		return fmt.Sprintf("application/%s", strings.ToLower(ext)), nil
+		// text
+	case "HTM", "HTML", "CSS", "XML":
+		return fmt.Sprintf("text/%s", strings.ToLower(ext)), nil
+	case "TXT":
+		return "text/plain", nil
+		// video
+	case "AVI", "MP4":
+		return fmt.Sprintf("video/%s", strings.ToLower(ext)), nil
+		// audio
+	case "MP3":
+		return fmt.Sprintf("audio/%s", strings.ToLower(ext)), nil
+		// office
+	case "DOC":
+		return "application/msword", nil
+	case "DOCX":
+		return "application/vnd.openxmlformats-officedocument.wordprocessingml.document", nil
+	case "XLS":
+		return "application/x-xls", nil
+	case "XLSX":
+		return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", nil
+	case "PPT", "PPS":
+		return "application/vnd.ms-powerpoint", nil
+	case "SVG":
+		return "text/xml", nil
+	default:
+		return "", errors.New(commons.CUS_ERR_4021)
+	}
 }

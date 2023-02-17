@@ -1,0 +1,8 @@
+NumVal:          #一些数值类型的定义
+  MAX_LOGIN_ERR_TIMES: 5        #允许最大密码输入错误次数
+  LOGIN_ERR_REFRESH_TIME: 20    # 密码输入重试间隔时间，此处为分钟
+  PIN_CODE_INVALID_MINUTE: 5   #// 验证码失效时间 分钟  //非手机验证码
+UploadProps:
+  MAX_UPLOAD_FILE_SIZE: 8     #允许最大上传文件为8M
+  MAX_UPLOAD_FILE_AMOUNT: 5    #  允许最大同时上传数量
+
