@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"fmt"
+	"gingate/core"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,5 +16,6 @@ import (
 func Ping(c *gin.Context) {
 	c.String(200, "pong")
 	//service.TestXorm()
+	fmt.Println("*************  Now Smark is : " + core.Cfg.Smark)
 	return
 }

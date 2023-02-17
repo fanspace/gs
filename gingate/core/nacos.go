@@ -29,11 +29,6 @@ func initNacos() (*NacosConfig, error) {
 		Error(err.Error())
 		return nil, err
 	}
-	if err := vs.Unmarshal(Cfg); err != nil {
-		Error(err.Error())
-		return nil, err
-	}
-
 	if err := vs.Unmarshal(nac); err != nil {
 		Error(err.Error())
 		return nil, err
@@ -58,20 +53,59 @@ func (nac *NacosConfig) initNacosCfg() (*Config, error) {
 		DataId: nac.ConfigId,
 		Group:  nac.Group,
 	})
+
 	if content != "" && strings.Index(content, "AppName") == 0 {
-		vs := viper.New()
-		vs.SetConfigType("yaml")
-		vs.ReadConfig(bytes.NewReader([]byte(content)))
-		if err := vs.Unmarshal(config); err != nil {
-			Error(err.Error())
-			return config, err
-		}
-		return config, nil
+
+		return dealContent2Config(content, config)
 	}
+
 	return config, errors.New("读取远程配置失败")
 }
 
-// 仅做测试，实际gate不需要注册
+// 仅做测试，实际使用k8s服务名，不需要nacos做服务发现
+// 仅供本机测试环境参考
+
+func dealContent2Config(content string, config *Config) (*Config, error) {
+	vs := viper.New()
+	vs.SetConfigType("yaml")
+	vs.ReadConfig(bytes.NewReader([]byte(content)))
+	if err := vs.Unmarshal(config); err != nil {
+		Error(err.Error())
+		return config, err
+	}
+	return config, nil
+}
+
+func (nac *NacosConfig) AddNacosListener() {
+
+	client, err := clients.NewConfigClient(
+		vo.NacosClientParam{
+			ClientConfig:  nac.ClientConfig,
+			ServerConfigs: nac.ServerConfigs,
+		},
+	)
+	if err != nil {
+		Error(err.Error())
+
+	}
+
+	err = client.ListenConfig(vo.ConfigParam{
+		DataId: nac.ConfigId,
+		Group:  nac.Group,
+		OnChange: func(namespace, group, dataId, data string) {
+			fmt.Println("ListenConfig group:" + group + ", dataId:" + dataId + ", data:" + data)
+			if len(data) == 0 || strings.Index(data, "AppName") != 0 {
+				Error("getNacosConfigData - LoadErr , len is 0")
+			} else {
+				Cfg, err = dealContent2Config(data, Cfg)
+				if err != nil {
+					Error(err.Error())
+				}
+			}
+		},
+	})
+}
+
 func (nac *NacosConfig) initNamingClient() error {
 	namingClient, err := clients.NewNamingClient(
 		vo.NacosClientParam{

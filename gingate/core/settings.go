@@ -109,6 +109,7 @@ func init() {
 			if err != nil {
 				Error(err.Error())
 			}
+			go nac.AddNacosListener()
 		}
 	}
 	if Cfg == nil || Cfg.AppName == "" {

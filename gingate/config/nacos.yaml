@@ -6,5 +6,7 @@ ClientConfig:
   TimeoutMs: 50000
   NotLoadCacheAtStart: true
   LogLevel: "debug"
+  ListenInterval: 30000
+  BeatInterval: 5000
 ConfigId: "gingate-config.yaml"
 Group: "dev"
