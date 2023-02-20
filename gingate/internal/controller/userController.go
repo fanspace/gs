@@ -2,6 +2,7 @@ package controller
 
 import (
 	"gingate/commons"
+	"gingate/core"
 	log "gingate/core"
 	"gingate/internal/model"
 	"gingate/internal/service"
@@ -23,7 +24,7 @@ func GetUser(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		log.Error(err.Error())
-		c.JSON(http.StatusOK, gin.H{"code": log.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: commons.CUS_ERR_4002}})
+		c.JSON(http.StatusOK, gin.H{"code": log.WEB_STATUS_BACK, "result": &model.SimpleResponse{Success: false, Msg: core.Cfg.BizErr["err_4002"]}})
 		return
 	}
 	req := new(pb.UserReq)

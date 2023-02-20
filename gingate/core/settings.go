@@ -22,6 +22,7 @@ type Config struct {
 	GrpcSettings     *GrpcSettings
 	RabbitMqSettings *RabbitMqSettings
 	FtpSettings      *FtpSettings
+	BizErr           map[string]string
 }
 type Database struct {
 	MysqlSettings *MysqlSettings
