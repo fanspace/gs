@@ -161,9 +161,9 @@ func (nac *NacosConfig) initNamingClient() error {
 		fmt.Errorf("初始化nacos 失败: %s", err.Error())
 		return err
 	}
-	port, _ := strconv.Atoi(strings.Split(Cfg.HttpSettings.ListenAddress, ":")[1])
+	port, _ := strconv.Atoi(Cfg.GrpcSettings.Port)
 	success, err := namingClient.RegisterInstance(vo.RegisterInstanceParam{
-		//Ip:        "gingate-srv.test.svc.cluster.local"
+		//Ip:        "serverb-srv.test.svc.cluster.local"
 		Ip:          "127.0.0.1",
 		Port:        uint64(port),
 		ServiceName: Cfg.AppName,

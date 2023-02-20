@@ -13,7 +13,7 @@ import (
 )
 
 func initCasbin() (*casbin.Enforcer, error) {
-	a, err := xormadapter.NewAdapter("mysql", Cfg.Database.MysqlSettings.Url, true)
+	a, err := xormadapter.NewAdapter("mysql", Cfg.MysqlSettings.Url, true)
 	if err != nil {
 		Error(err.Error())
 		return nil, err
@@ -31,13 +31,13 @@ func initCasbin() (*casbin.Enforcer, error) {
 	wc := rbac.WatcherOptions{
 		Options: redis.Options{
 			Network:  "tcp",
-			Password: Cfg.Database.RedisSettings.Password,
+			Password: Cfg.RedisSettings.Password,
 		},
 		Channel:    fmt.Sprintf("/%s_rbac", Cfg.AppName),
 		LocalID:    Cfg.Smark,
 		IgnoreSelf: true,
 	}
-	w, err := rbac.NewWatcher(Cfg.Database.RedisSettings.Addr, wc)
+	w, err := rbac.NewWatcher(Cfg.RedisSettings.Addr, wc)
 	if err != nil {
 		Error(err.Error())
 		return nil, err

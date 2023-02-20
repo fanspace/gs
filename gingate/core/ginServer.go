@@ -58,7 +58,6 @@ func (gracefulServer *GracefulServer) Start() error {
 }
 
 func (gracefulServer *GracefulServer) ShutDown() {
-
 	go func() {
 		// service connections
 		if err := Srv.Server.ListenAndServe(); err != nil && err != http.ErrServerClosed {

@@ -74,6 +74,7 @@ type MinioSettings struct {
 }
 
 type GrpcSettings struct {
+	Port     string
 	TimeOut  time.Duration
 	EndPoint map[string]string
 }
@@ -118,9 +119,9 @@ func init() {
 	}
 
 	// 以下为判断
-	if Cfg.Smark == "" {
+	/*	if Cfg.Smark == "" {
 		Cfg.Smark = GetIpStr()
-	}
+	}*/
 	initOptions()
 	Cfg.PrintConfig()
 }
@@ -128,7 +129,7 @@ func init() {
 func initLocalConfig() {
 	Info("loading local system configure......")
 	vs := viper.New()
-	vs.SetConfigName("config.yaml")
+	vs.SetConfigName("application.yml")
 	vs.AddConfigPath("./config")
 	vs.SetConfigType("yaml")
 	if err := vs.ReadInConfig(); err != nil {

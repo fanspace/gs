@@ -39,19 +39,18 @@ LogSettings:
   FileLevel: "DEBUG"
   FileJson: true
   FileLocation: "./logs"
-Database:
-  MysqlSettings:
-    DriverName: "mysql"
-    Url: "root:123456@tcp(192.168.0.95:3306)/oecp?charset=utf8mb4"
-    MaxIdleConns: 100
-    MaxOpenConns: 1500
-    QueryTimeout: 30
-    UseCache: false
-  RedisSettings:
-    Addr: "192.168.0.95:6379"
-    DB: 6
-    Password: "123456"
-    PoolSize: 20
-    MaxIdle: 3
-    MaxActive: 0
-    IdleTimeout: 60
+MysqlSettings:
+  DriverName: "mysql"
+  Url: "root:123456@tcp(192.168.0.95:3306)/oecp?charset=utf8mb4"
+  MaxIdleConns: 100
+  MaxOpenConns: 1500
+  QueryTimeout: 30
+  UseCache: false
+RedisSettings:
+  Addr: "192.168.0.95:6379"
+  DB: 6
+  Password: "123456"
+  PoolSize: 20
+  MaxIdle: 3
+  MaxActive: 0
+  IdleTimeout: 60

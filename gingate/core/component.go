@@ -15,7 +15,7 @@ var Casbin *casbin.Enforcer
 var err error
 
 func InitComponent() {
-	if Cfg.Database.MysqlSettings != nil {
+	if Cfg.MysqlSettings != nil {
 		Orm, err = initXorm()
 		if err != nil {
 			Error(err.Error())
@@ -24,7 +24,7 @@ func InitComponent() {
 		}
 	}
 
-	if Cfg.Database.RedisSettings != nil {
+	if Cfg.RedisSettings != nil {
 		Rpool, err = initRedis()
 		if err != nil {
 			Error(err.Error())
