@@ -34,7 +34,8 @@ func InitRouter() *gin.Engine {
 		userGroup.POST("/list", QueryUsers)
 	}
 	articleGroup := router.Group(prefix + "/article")
-	articleGroup.Use(middleware.MustLogin())
+	//articleGroup.Use(middleware.MustLogin())
+	articleGroup.Use()
 	{
 		articleGroup.GET("/:id", GetArticle)
 		articleGroup.POST("/list", QueryArticles)

@@ -8,4 +8,6 @@ const (
 	PREFIX_BCACHE_BAN       = "ban"
 	PREFIX_REDIS_USER_BAN   = "banuser"
 	DEFAULT_FILE_SIZE_LIMIT = 8 * 1024 * 1024
+	GRPC_TOKEN_APPID        = "abc"
+	GRPC_TOKEN_APPKEY       = "def"
 )

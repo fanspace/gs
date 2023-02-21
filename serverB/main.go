@@ -17,7 +17,10 @@ func main() {
 		log.Error(err.Error())
 		os.Exit(1)
 	}
-	s := grpc.NewServer()
+	serverOptions := []grpc.ServerOption{
+		grpc.UnaryInterceptor(api.TokenInterceptor()),
+	}
+	s := grpc.NewServer(serverOptions...)
 	pb.RegisterArticleServerServer(s, ArticleService)
 	log.Info("Account Grpc Server Starting on " + core.Cfg.GrpcSettings.Port)
 	core.InitComponent()

@@ -15,7 +15,7 @@ import (
 
 func DealGrpcCall[T any](req T, methodName string, grpcName string) (any, error) {
 	var res []reflect.Value
-	pool, err := log.GetGrpcPool(grpcName)
+	pool, err := core.GetGrpcPool(grpcName)
 	if err != nil {
 		log.Error(err.Error())
 		return nil, err

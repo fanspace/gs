@@ -1,14 +1,36 @@
 package core
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"gingate/commons"
 	"google.golang.org/grpc"
 )
 
+type customCredential struct{}
+
+func (c customCredential) GetRequestMetadata(ctx context.Context, uri ...string) (map[string]string, error) {
+	return map[string]string{
+		"appid":  GRPC_TOKEN_APPID,
+		"appkey": GRPC_TOKEN_APPKEY,
+	}, nil
+}
+
+func (c customCredential) RequireTransportSecurity() bool {
+	/*
+		if OpenTLS {
+			return true
+		}*/
+	// 不使用tls
+	return false
+}
+
 func dialgrpc(address string) (*grpc.ClientConn, error) {
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	var opts []grpc.DialOption
+	opts = append(opts, grpc.WithInsecure())
+	opts = append(opts, grpc.WithPerRPCCredentials(new(customCredential)))
+	conn, err := grpc.Dial(address, opts...)
 	if err != nil {
 		Error(err.Error())
 		return nil, err
