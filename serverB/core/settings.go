@@ -130,7 +130,7 @@ func init() {
 func initLocalConfig() {
 	Info("loading local system configure......")
 	vs := viper.New()
-	vs.SetConfigName("application.yml")
+	vs.SetConfigName("application.yaml")
 	vs.AddConfigPath("./config")
 	vs.SetConfigType("yaml")
 	if err := vs.ReadInConfig(); err != nil {
