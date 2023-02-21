@@ -1,4 +1,4 @@
-测试用grpc-server, 使用xorm,
+测试用grpc-server, 使用go-spring, grpcclient starter, xorm,
 <pre><code>
 DROP TABLE IF EXISTS `article`;
 
