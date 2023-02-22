@@ -54,7 +54,7 @@ func initGrpcs() {
 	}
 }
 
-// 因使用k8s，为保证由k8s管理负载均衡，去除pool方式，采用单例连接
+// 去除pool方式，采用单例连接
 // 如需pool方式，可使用 https://github.com/shimingyah/pool
 func GetGrpcPool(grpcname string) (*grpc.ClientConn, error) {
 	if Cfg.DaprMode {
