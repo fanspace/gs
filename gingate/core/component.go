@@ -74,6 +74,12 @@ func CloseComponent() {
 	if BCache != nil {
 		BCache.Close()
 	}
+	if Cfg.GrpcSettings != nil {
+		Info("shutting down grpc connection ...")
+		for grpcname, _ := range Cfg.GrpcSettings.EndPoint {
+			GrpcPools[grpcname].Close()
+		}
+	}
 }
 
 func loadFromRedis() error {

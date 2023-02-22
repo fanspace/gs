@@ -44,7 +44,7 @@ func initGrpcs() {
 	if Cfg.GrpcSettings != nil && len(Cfg.GrpcSettings.EndPoint) > 0 {
 		GrpcPools = make(map[string]*grpc.ClientConn)
 		for grpcname, gprcaddr := range Cfg.GrpcSettings.EndPoint {
-			fmt.Println(grpcname, gprcaddr)
+			fmt.Println(grpcname, gprcaddr, "connecting...")
 			conn, err := dialgrpc(gprcaddr)
 			if err != nil {
 				Error(err.Error())
@@ -60,9 +60,19 @@ func GetGrpcPool(grpcname string) (*grpc.ClientConn, error) {
 	if Cfg.DaprMode {
 		grpcname = "daprrpc"
 	}
-	if addr, ok := Cfg.GrpcSettings.EndPoint[grpcname]; ok {
-		return dialgrpc(addr)
-	} else {
-		return nil, errors.New(commons.CUS_ERR_4004)
+	conn := GrpcPools[grpcname]
+	if conn == nil || conn.GetState().String() != "READY" {
+		if addr, ok := Cfg.GrpcSettings.EndPoint[grpcname]; ok {
+			newcon, err := dialgrpc(addr)
+			if err != nil {
+				return nil, errors.New(commons.CUS_ERR_4004)
+			}
+			GrpcPools[grpcname] = newcon
+			return newcon, nil
+		} else {
+			return nil, errors.New(commons.CUS_ERR_4004)
+		}
 	}
+
+	return conn, nil
 }

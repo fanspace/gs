@@ -20,7 +20,8 @@ func DealGrpcCall[T any](req T, methodName string, grpcName string) (any, error)
 		log.Error(err.Error())
 		return nil, err
 	}
-	defer pool.Close()
+	// 连接重用
+	//defer pool.Close()
 	if pool == nil {
 		log.Error(fmt.Sprintf("connect to %s failed", grpcName))
 		return nil, errors.New(commons.CUS_ERR_4007)
